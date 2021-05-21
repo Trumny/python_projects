@@ -1,0 +1,98 @@
+#! python3
+#make N different tests in N txt files
+import os, random, os.path
+
+#create files directory(if not exists)
+if not os.path.exists(os.path.join('..', 'Tests')):
+    os.makedirs(os.path.join('..', 'Tests'))
+    
+#questions and answers variants
+capitals={'Велика Британія':'Лондон',
+'Португалія':'Лісабон',
+'Молдова':'Кишинів',
+'Україна':'Київ',
+'Литва':'Вільнюс',
+'Греція':'Афіни',
+'Нідерланди':'Амстердам',
+'Бельгія':'Брюсель',
+'Словаччина':'Братислава',
+'Німеччина':'Берлін',
+'Сербія':'Белград',
+'Швейцарія':'Берн',
+'Румунія':'Бухарест',
+'Угорщина':'Будапешт',
+'Ватикан':'Ватикан',
+'Польща':'Варшава',
+'Австрія':'Відень',
+'Чехія':'Прага',
+'Норвегія':'Осло',
+'Франція':'Париж',
+'Іспанія':'Мадрид',
+'Білорусь':'Мінськ',
+'Монако':'Монако',
+'Росія':'Москва',
+'Болгарія':'Софія',
+'Швеція':'Стокгольм',
+'Італія':'Рим',
+'Латвія':'Рига',
+'Естонія':'Таллінн',
+'Фінляндія':'Хельсінкі',
+'Туреччина':'Анкара',
+'Індія':'Нью-Делі',
+'Таджикистан':'Душанбе',
+'Вірменія':'Єреван',
+'Ізраїль':'Єрусалим',
+'Афганістан':'Кабул',
+'Сирія':'Дамаск',
+'Киргизстан':'Бішкек',
+'Азербайджан':'Баку',
+'Ірак':'Багдад',
+'Туркменістан':'Ашхабад',
+'Казахстан':'Астана',
+'КНР':'Пекін',
+'КНДР':'Пхеньян',
+'Південна Корея':'СеулАзія',
+'Японія':'Токіо',
+'Монголія':'Улан-Батор',
+'Іран':'Тегеран',
+'Грузія':'Тбілісі',
+'Узбекистан':'Ташкент' }
+
+#save function 
+def saveFiles(text, N):
+    file=open(os.path.abspath(os.path.join('..','Tests', 'білет№'+str(N)+'.txt')), 'w')
+    file.write(text)
+    file.close()
+                                        
+#content
+def text(N) :
+    k=list(capitals.keys()) 
+    random.shuffle(k)
+    v=list(capitals.values())
+    
+    #title of tests
+    main= 'Ім\'я: \nДата: \nКлас: \n\tПеревірка знань столиць країн. Білет№ ' + str(N)+ '\n'
+    
+    num=1
+    for i in k:
+        variants=[capitals[i]]
+        
+        while len(variants)!=5:
+            s=random.choice(v)
+            
+            if s not in variants:
+                variants.append(s)
+                
+        random.shuffle(variants)
+        
+        #Number of variants: A), B), C)....
+        main+=str(num) + '. Oберіть столицю: '+ i + '\n'  +'\tA) '+variants[0]+'\n'+'\tB) '+variants[1]+'\n'+'\tC) '+variants[2]+'\n'+'\tD) '+variants[3]+'\n'+'\tЕ) '+variants[4]+'\n'
+        
+        num+=1
+      
+    return  main
+           
+for N in range(1,11):#Number  of tickets(10)
+     saveFiles(text(N),N)                         
+                              
+print('you files\n' + os.path.abspath(os.path.join('..','Tests')))          
